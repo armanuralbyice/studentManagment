@@ -1,7 +1,21 @@
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
+using StudentManagement.Data;
+using StudentManagement.Service;
+using StudentManagement.Service.impl;
+using StudentManagement.Setting;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
-
+builder.Services.Configure<MongoDbSettings>(builder.Configuration.GetSection(nameof(MongoDbSettings)));
+builder.Services.AddSingleton<IMongoClient>(sp =>
+{
+    var settings = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
+    return new MongoClient(settings.ConnectionString);
+});
+builder.Services.AddSingleton<MongoDbContext>();
+builder.Services.AddScoped<DepartmentService, DepartmentServiceImpl>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -18,9 +32,8 @@ app.UseAuthorization();
 app.MapStaticAssets();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
-    .WithStaticAssets();
+    name: "departmentCreate",
+    pattern: "{controller=Department}/{action=Create}/{id?}");
 
 
 app.Run();

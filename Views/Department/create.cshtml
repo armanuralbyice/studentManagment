@@ -1,0 +1,39 @@
+@model StudentManagement.Models.Department
+
+@{
+    ViewData["Title"] = "Create Department";
+}
+
+<div class="container mt-4" style="max-width: 500px;">
+    <h2 class="mb-3">Create Department</h2>
+
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="e.g. Computer Science" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Code" class="form-label"></label>
+            <input asp-for="Code" class="form-control" placeholder="e.g. CSE" />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Department</button>
+    </form>
+</div>
