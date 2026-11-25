@@ -8,7 +8,7 @@ public class Department
 {
     [BsonId]
     [BsonRepresentation(BsonType.ObjectId)]
-    private string? Id { get; set; }
+    public string? Id { get; set; }
     
     [BsonElement("department_name")]
     [Required(ErrorMessage = "Department name is required")]

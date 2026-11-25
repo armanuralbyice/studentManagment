@@ -16,6 +16,7 @@ builder.Services.AddSingleton<IMongoClient>(sp =>
 });
 builder.Services.AddSingleton<MongoDbContext>();
 builder.Services.AddScoped<DepartmentService, DepartmentServiceImpl>();
+builder.Services.AddScoped<StudentService, StudentServiceImpl>();
 var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
@@ -31,9 +32,8 @@ app.UseAuthorization();
 
 app.MapStaticAssets();
 
-app.MapControllerRoute(
-    name: "departmentCreate",
-    pattern: "{controller=Department}/{action=Create}/{id?}");
+app.MapControllerRoute(name: "department", pattern: "{controller=Department}/{action=Create}/{id?}");
+app.MapControllerRoute(name: "student", pattern: "{controller=Student}/{action=Create}/{id?}");
 
 
 app.Run();

@@ -1,0 +1,39 @@
+@model StudentManagement.Models.Student
+
+@{
+    ViewData["Title"] = "Create Student";
+}
+
+<div class="container mt-4" style="max-width: 500px;">
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    @if (TempData["successMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["successMessage"]
+        </div>
+    }
+    <form asp-action="Create" method="post">
+        @Html.AntiForgeryToken()
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="e.g. MD" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="xyz@gmail.com" />
+        </div>
+        <div class="mb-3">
+            <label asp-for="DepartmentId" class="form-label">Department</label>
+            <select asp-for="DepartmentId" asp-items="ViewBag.Departments" class="form-select">
+                <option value="">-- Select Department --</option>
+            </select>
+            <span asp-validation-for="DepartmentId" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Save Student</button>
+    </form>
+</div>

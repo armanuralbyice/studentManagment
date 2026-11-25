@@ -14,4 +14,5 @@ public class MongoDbContext
         _database = mongoClient.GetDatabase(options.Value.DatabaseName);
     }
     public IMongoCollection<Department> Departments => _database.GetCollection<Department>(nameof(Departments));
+    public IMongoCollection<Student> Students => _database.GetCollection<Student>(nameof(Students));
 }
